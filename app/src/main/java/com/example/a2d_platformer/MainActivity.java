@@ -6,14 +6,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import java.util.Objects;
-
 public class MainActivity extends AppCompatActivity {
 
-    /* Этот метод при вызове убирает надоедливую навигационную панель */
+    View.OnSystemUiVisibilityChangeListener onSystemUiVisibilityChangeListener =
+            new View.OnSystemUiVisibilityChangeListener() {
+        @Override
+        public void onSystemUiVisibilityChange(int visibility) {
+            setImmersiveSticky();
+        }
+    };
+
+    /* Этот метод при вызове скрывает навигационную панель */
     void setImmersiveSticky() {
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -23,16 +28,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         setImmersiveSticky();
-        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener((new View.OnSystemUiVisibilityChangeListener() {
-            @Override
-            public void onSystemUiVisibilityChange(int visibility) {
-                setImmersiveSticky();
-            }
-        }));
+        getWindow().getDecorView()
+                .setOnSystemUiVisibilityChangeListener(onSystemUiVisibilityChangeListener);
     }
 
     @Override
