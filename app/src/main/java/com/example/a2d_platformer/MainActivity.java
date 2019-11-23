@@ -28,9 +28,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //setTheme(R.style.SplashTheme);
+        //setTheme(R.style.AppTheme);
 
         setImmersiveSticky();
         getWindow().getDecorView()
