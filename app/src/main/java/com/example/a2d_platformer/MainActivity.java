@@ -8,14 +8,6 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
-    View.OnSystemUiVisibilityChangeListener onSystemUiVisibilityChangeListener =
-            new View.OnSystemUiVisibilityChangeListener() {
-        @Override
-        public void onSystemUiVisibilityChange(int visibility) {
-            setImmersiveSticky();
-        }
-    };
-
     /* Этот метод при вызове скрывает навигационную панель */
     void setImmersiveSticky() {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -28,15 +20,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //setTheme(R.style.SplashTheme);
-        //setTheme(R.style.AppTheme);
 
         setImmersiveSticky();
-        getWindow().getDecorView()
-                .setOnSystemUiVisibilityChangeListener(onSystemUiVisibilityChangeListener);
+        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener
+                (new View.OnSystemUiVisibilityChangeListener() {
+                    @Override
+                    public void onSystemUiVisibilityChange(int visibility) {
+                        setImmersiveSticky();
+                    }
+                });
     }
 
     @Override
